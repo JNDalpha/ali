@@ -22,29 +22,29 @@ export default function Diseases() {
   const selectedDiseaseData = diseases.find((d) => d.id === selectedDisease);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl mb-4 shadow-lg">
-            <BookOpen className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4">
+        <div className="mb-4 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+            <BookOpen className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">疾病科普</h1>
-          <p className="text-gray-600">了解常见疾病,做好预防和治疗</p>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">疾病科普</h1>
+          <p className="text-xs text-gray-600">了解常见疾病,做好预防和治疗</p>
         </div>
 
-        <Card className="mb-8 border-none shadow-xl">
-          <CardContent className="pt-6">
+        <Card className="mb-3 border-none shadow-lg">
+          <CardContent className="p-3">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="搜索疾病名称..."
-                className="pl-12 h-12 text-lg rounded-xl border-2 focus:border-purple-500"
+                className="pl-10 h-10 text-sm rounded-lg border-2 focus:border-taobao-orange"
               />
             </div>
 
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-3 flex flex-wrap gap-1.5">
               {diseaseCategories.map((category) => (
                 <Button
                   key={category}
@@ -53,8 +53,8 @@ export default function Diseases() {
                   onClick={() => setSelectedCategory(category)}
                   className={
                     selectedCategory === category
-                      ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
-                      : 'hover:bg-purple-50 hover:border-purple-300'
+                      ? 'bg-taobao-orange hover:bg-taobao-orange-dark text-white h-7 px-2 text-xs'
+                      : 'hover:bg-orange-50 hover:border-taobao-orange h-7 px-2 text-xs'
                   }
                 >
                   {category}
@@ -69,81 +69,97 @@ export default function Diseases() {
             <Button
               variant="outline"
               onClick={() => setSelectedDisease(null)}
-              className="mb-4 hover:bg-purple-50"
+              className="mb-3 hover:bg-orange-50 text-sm h-8"
+              size="sm"
             >
               ← 返回列表
             </Button>
 
-            <Card className="border-none shadow-xl">
-              <CardHeader>
+            <Card className="border-none shadow-lg">
+              <CardHeader className="p-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle className="text-3xl mb-2">{selectedDiseaseData.name}</CardTitle>
-                    <CardDescription className="text-base">
-                      <span className="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                    <CardTitle className="text-lg mb-1">{selectedDiseaseData.name}</CardTitle>
+                    <CardDescription className="text-xs">
+                      <span className="inline-flex items-center px-2 py-0.5 bg-orange-100 text-taobao-orange rounded-full text-xs font-medium">
                         {selectedDiseaseData.category}
                       </span>
                     </CardDescription>
                   </div>
-                  <Activity className="w-12 h-12 text-purple-600" />
+                  <Activity className="w-8 h-8 text-taobao-orange" />
                 </div>
               </CardHeader>
-              <CardContent>
+              <CardContent className="p-3 pt-0">
                 <Tabs defaultValue="overview" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4">
-                    <TabsTrigger value="overview">概述</TabsTrigger>
-                    <TabsTrigger value="symptoms">症状</TabsTrigger>
-                    <TabsTrigger value="prevention">预防</TabsTrigger>
-                    <TabsTrigger value="treatment">治疗</TabsTrigger>
+                  <TabsList className="grid w-full grid-cols-4 h-8">
+                    <TabsTrigger value="overview" className="text-xs">概述</TabsTrigger>
+                    <TabsTrigger value="symptoms" className="text-xs">症状</TabsTrigger>
+                    <TabsTrigger value="prevention" className="text-xs">预防</TabsTrigger>
+                    <TabsTrigger value="treatment" className="text-xs">治疗</TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="overview" className="mt-6">
-                    <div className="prose prose-sm max-w-none">
-                      <p className="text-gray-800 leading-relaxed text-lg">
-                        {selectedDiseaseData.description}
-                      </p>
+                  <TabsContent value="overview" className="mt-3">
+                    <div className="space-y-3">
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-900 mb-1.5 flex items-center">
+                          <BookOpen className="w-4 h-4 mr-1.5 text-taobao-orange" />
+                          疾病简介
+                        </h3>
+                        <p className="text-xs text-gray-700 leading-relaxed">
+                          {selectedDiseaseData.description}
+                        </p>
+                      </div>
                     </div>
                   </TabsContent>
 
-                  <TabsContent value="symptoms" className="mt-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {selectedDiseaseData.symptoms.map((symptom, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center space-x-3 p-4 bg-red-50 rounded-xl border border-red-100"
-                        >
-                          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0" />
-                          <span className="text-gray-800">{symptom}</span>
-                        </div>
-                      ))}
+                  <TabsContent value="symptoms" className="mt-3">
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1.5 flex items-center">
+                        <AlertCircle className="w-4 h-4 mr-1.5 text-health-green" />
+                        主要症状
+                      </h3>
+                      <ul className="space-y-1.5">
+                        {selectedDiseaseData.symptoms.map((symptom, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="inline-block w-1.5 h-1.5 bg-health-green rounded-full mt-1.5 mr-2 flex-shrink-0" />
+                            <span className="text-xs text-gray-700">{symptom}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </TabsContent>
 
-                  <TabsContent value="prevention" className="mt-6">
-                    <div className="space-y-4">
-                      {selectedDiseaseData.prevention.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex items-start space-x-3 p-4 bg-green-50 rounded-xl border border-green-100"
-                        >
-                          <Shield className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-800">{item}</span>
-                        </div>
-                      ))}
+                  <TabsContent value="prevention" className="mt-3">
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1.5 flex items-center">
+                        <Shield className="w-4 h-4 mr-1.5 text-health-green" />
+                        预防措施
+                      </h3>
+                      <ul className="space-y-1.5">
+                        {selectedDiseaseData.prevention.map((measure, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="inline-block w-1.5 h-1.5 bg-health-green rounded-full mt-1.5 mr-2 flex-shrink-0" />
+                            <span className="text-xs text-gray-700">{measure}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </TabsContent>
 
-                  <TabsContent value="treatment" className="mt-6">
-                    <div className="space-y-4">
-                      {selectedDiseaseData.treatment.map((item, index) => (
-                        <div
-                          key={index}
-                          className="flex items-start space-x-3 p-4 bg-blue-50 rounded-xl border border-blue-100"
-                        >
-                          <Pill className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                          <span className="text-gray-800">{item}</span>
-                        </div>
-                      ))}
+                  <TabsContent value="treatment" className="mt-3">
+                    <div className="space-y-2">
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1.5 flex items-center">
+                        <Pill className="w-4 h-4 mr-1.5 text-taobao-orange" />
+                        治疗建议
+                      </h3>
+                      <ul className="space-y-1.5">
+                        {selectedDiseaseData.treatment.map((treatment, index) => (
+                          <li key={index} className="flex items-start">
+                            <span className="inline-block w-1.5 h-1.5 bg-taobao-orange rounded-full mt-1.5 mr-2 flex-shrink-0" />
+                            <span className="text-xs text-gray-700">{treatment}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </TabsContent>
                 </Tabs>
@@ -151,29 +167,28 @@ export default function Diseases() {
             </Card>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
             {filteredDiseases.map((disease) => (
               <Card
                 key={disease.id}
-                className="border-none shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1"
+                className="border-none shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-0.5"
                 onClick={() => setSelectedDisease(disease.id)}
               >
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-xs font-medium">
-                      {disease.category}
-                    </span>
-                    <Activity className="w-5 h-5 text-purple-600" />
+                <CardHeader className="p-3">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <CardTitle className="text-sm mb-1">{disease.name}</CardTitle>
+                      <span className="inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-taobao-orange to-health-green text-white rounded-full text-xs font-medium">
+                        {disease.category}
+                      </span>
+                    </div>
+                    <Activity className="w-6 h-6 text-taobao-orange flex-shrink-0 ml-2" />
                   </div>
-                  <CardTitle className="text-xl">{disease.name}</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <CardDescription className="line-clamp-3 text-base">
+                <CardContent className="p-3 pt-0">
+                  <CardDescription className="text-xs line-clamp-2">
                     {disease.description}
                   </CardDescription>
-                  <div className="mt-4 flex items-center text-sm text-purple-600 font-medium">
-                    查看详情 →
-                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -181,10 +196,10 @@ export default function Diseases() {
         )}
 
         {filteredDiseases.length === 0 && (
-          <Card className="border-none shadow-xl">
-            <CardContent className="py-12 text-center">
-              <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">未找到相关疾病信息</p>
+          <Card className="border-none shadow-lg">
+            <CardContent className="py-8 text-center">
+              <Search className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500 text-sm">未找到相关疾病信息</p>
             </CardContent>
           </Card>
         )}

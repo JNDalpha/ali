@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { searchWithAI } from '@/services/api';
 import type { SearchReference } from '@/types/medicine';
 
@@ -71,43 +70,43 @@ export default function SearchPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-green-600 to-emerald-600 rounded-2xl mb-4 shadow-lg">
-            <SearchIcon className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4">
+        <div className="mb-4 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+            <SearchIcon className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">药品检索</h1>
-          <p className="text-gray-600">快速搜索药品信息,了解功效和用法</p>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">药品检索</h1>
+          <p className="text-xs text-gray-600">快速搜索药品信息,了解功效和用法</p>
         </div>
 
-        <Card className="mb-8 border-none shadow-xl">
-          <CardContent className="pt-6">
+        <Card className="mb-3 border-none shadow-lg">
+          <CardContent className="p-3">
             <div className="flex items-center space-x-2">
               <div className="relative flex-1">
-                <SearchIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <SearchIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="输入药品名称或症状..."
-                  className="pl-12 h-14 text-lg rounded-xl border-2 focus:border-green-500"
+                  className="pl-10 h-10 text-sm rounded-lg border-2 focus:border-taobao-orange"
                   disabled={isLoading}
                 />
               </div>
               <Button
                 onClick={handleSearch}
                 disabled={!query.trim() || isLoading}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 h-14 rounded-xl shadow-lg"
+                className="bg-taobao-orange hover:bg-taobao-orange-dark text-white px-4 h-10 rounded-lg shadow-md text-sm"
               >
                 {isLoading ? (
                   <span className="flex items-center">
-                    <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
-                    搜索中...
+                    <Sparkles className="w-4 h-4 mr-1 animate-pulse" />
+                    搜索中
                   </span>
                 ) : (
                   <span className="flex items-center">
-                    <SearchIcon className="w-5 h-5 mr-2" />
+                    <SearchIcon className="w-4 h-4 mr-1" />
                     搜索
                   </span>
                 )}
@@ -115,9 +114,9 @@ export default function SearchPage() {
             </div>
 
             {!hasSearched && (
-              <div className="mt-6">
-                <p className="text-sm text-gray-600 mb-3">热门搜索:</p>
-                <div className="flex flex-wrap gap-2">
+              <div className="mt-3">
+                <p className="text-xs text-gray-600 mb-2">热门搜索:</p>
+                <div className="flex flex-wrap gap-1.5">
                   {popularSearches.map((search, index) => (
                     <Button
                       key={index}
@@ -129,7 +128,7 @@ export default function SearchPage() {
                           handleSearch();
                         }, 100);
                       }}
-                      className="text-sm hover:bg-green-50 hover:border-green-300"
+                      className="text-xs hover:bg-orange-50 hover:border-taobao-orange h-7 px-2"
                     >
                       {search}
                     </Button>
@@ -141,28 +140,28 @@ export default function SearchPage() {
         </Card>
 
         {error && (
-          <Alert variant="destructive" className="mb-4">
+          <Alert variant="destructive" className="mb-3">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription className="text-sm">{error}</AlertDescription>
           </Alert>
         )}
 
         {(summary || isLoading) && (
-          <Card className="mb-8 border-none shadow-xl">
-            <CardHeader>
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-white" />
+          <Card className="mb-3 border-none shadow-lg">
+            <CardHeader className="p-3">
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-taobao-orange to-health-green rounded-lg flex items-center justify-center">
+                  <Sparkles className="w-4 h-4 text-white" />
                 </div>
-                <CardTitle>AI智能总结</CardTitle>
+                <CardTitle className="text-sm">AI智能总结</CardTitle>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="p-3 pt-0">
               <div className="prose prose-sm max-w-none">
-                <p className="text-gray-800 leading-relaxed whitespace-pre-wrap">
+                <p className="text-gray-800 text-sm leading-relaxed whitespace-pre-wrap">
                   {summary}
                   {isLoading && (
-                    <span className="inline-block w-2 h-5 bg-blue-600 animate-pulse ml-1" />
+                    <span className="inline-block w-1.5 h-4 bg-taobao-orange animate-pulse ml-1" />
                   )}
                 </p>
               </div>
@@ -171,40 +170,40 @@ export default function SearchPage() {
         )}
 
         {references.length > 0 && (
-          <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-              <Globe className="w-6 h-6 mr-2 text-green-600" />
+          <div className="mb-3">
+            <h2 className="text-base font-bold text-gray-900 mb-2 flex items-center px-1">
+              <Globe className="w-5 h-5 mr-1.5 text-health-green" />
               参考资料
-              <span className="ml-3 px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-                {references.length} 条结果
+              <span className="ml-2 px-2 py-0.5 bg-green-100 text-health-green text-xs font-medium rounded-full">
+                {references.length}
               </span>
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
               {references.map((reference) => (
                 <Card
                   key={reference.id}
-                  className="border-none shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1"
+                  className="border-none shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer hover:-translate-y-0.5"
                   onClick={() => window.open(reference.url, '_blank')}
                 >
-                  <CardHeader>
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="text-sm text-green-600 font-semibold bg-green-50 px-2 py-1 rounded">
+                  <CardHeader className="p-3">
+                    <div className="flex items-start justify-between mb-1">
+                      <span className="text-xs text-health-green font-semibold bg-green-50 px-1.5 py-0.5 rounded">
                         [{reference.id}]
                       </span>
-                      <ExternalLink className="w-4 h-4 text-gray-400 hover:text-green-500 transition-colors" />
+                      <ExternalLink className="w-3 h-3 text-gray-400 hover:text-taobao-orange transition-colors" />
                     </div>
-                    <CardTitle className="text-lg line-clamp-2">{reference.title}</CardTitle>
+                    <CardTitle className="text-sm line-clamp-2">{reference.title}</CardTitle>
                   </CardHeader>
-                  <CardContent>
-                    <CardDescription className="line-clamp-3 mb-4">
+                  <CardContent className="p-3 pt-0">
+                    <CardDescription className="line-clamp-2 mb-2 text-xs">
                       {reference.content}
                     </CardDescription>
                     <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span className="truncate font-medium">{reference.web_anchor || '来源'}</span>
+                      <span className="truncate font-medium text-xs">{reference.web_anchor || '来源'}</span>
                       {reference.date && (
-                        <div className="flex items-center space-x-1 bg-gray-50 px-2 py-1 rounded">
+                        <div className="flex items-center space-x-1 bg-gray-50 px-1.5 py-0.5 rounded">
                           <Calendar className="w-3 h-3" />
-                          <span>{reference.date}</span>
+                          <span className="text-xs">{reference.date}</span>
                         </div>
                       )}
                     </div>
@@ -216,18 +215,19 @@ export default function SearchPage() {
         )}
 
         {followupQueries.length > 0 && (
-          <Card className="border-none shadow-xl">
-            <CardHeader>
-              <CardTitle>相关问题推荐</CardTitle>
+          <Card className="border-none shadow-lg mb-3">
+            <CardHeader className="p-3">
+              <CardTitle className="text-sm">相关问题推荐</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="flex flex-wrap gap-3">
+            <CardContent className="p-3 pt-0">
+              <div className="flex flex-wrap gap-1.5">
                 {followupQueries.map((followupQuery, index) => (
                   <Button
                     key={index}
                     variant="outline"
+                    size="sm"
                     onClick={() => handleFollowupClick(followupQuery)}
-                    className="hover:bg-green-50 hover:border-green-300"
+                    className="hover:bg-orange-50 hover:border-taobao-orange text-xs h-7 px-2"
                   >
                     {followupQuery}
                   </Button>
@@ -238,19 +238,18 @@ export default function SearchPage() {
         )}
 
         {hasSearched && !isLoading && !summary && !error && (
-          <Card className="border-none shadow-xl">
-            <CardContent className="py-12 text-center">
-              <SearchIcon className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">未找到相关结果,请尝试其他关键词</p>
+          <Card className="border-none shadow-lg">
+            <CardContent className="py-8 text-center">
+              <SearchIcon className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500 text-sm">未找到相关结果,请尝试其他关键词</p>
             </CardContent>
           </Card>
         )}
 
-        <Alert className="mt-8 border-orange-200 bg-orange-50">
-          <AlertCircle className="h-4 w-4 text-orange-600" />
-          <AlertDescription className="text-orange-800">
-            <strong>用药提醒:</strong> 搜索结果仅供参考,具体用药请遵医嘱。
-            处方药需凭医生处方购买,请勿自行用药。
+        <Alert className="border-orange-200 bg-orange-50">
+          <AlertCircle className="h-4 w-4 text-taobao-orange" />
+          <AlertDescription className="text-orange-800 text-xs">
+            <strong>用药提醒:</strong> 搜索结果仅供参考,具体用药请遵医嘱。处方药需凭医生处方购买。
           </AlertDescription>
         </Alert>
       </div>
