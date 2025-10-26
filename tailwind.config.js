@@ -72,6 +72,16 @@ export default {
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
+        taobao: {
+          orange: '#FF6633',
+          'orange-light': '#FF8855',
+          'orange-dark': '#FF4411',
+        },
+        health: {
+          green: '#00B578',
+          'green-light': '#00D68F',
+          'green-dark': '#009960',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',

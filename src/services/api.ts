@@ -22,6 +22,50 @@ apiClient.interceptors.response.use(
   }
 );
 
+function filterRepeatedContent(text: string): string {
+  const sentences = text.split(/([。!?;,\n])/);
+  const result: string[] = [];
+  const seenPhrases = new Set<string>();
+  
+  for (let i = 0; i < sentences.length; i++) {
+    const sentence = sentences[i];
+    if (!sentence || sentence.match(/^[。!?;,\n]$/)) {
+      result.push(sentence);
+      continue;
+    }
+    
+    const words = sentence.split(/\s+/);
+    const filteredWords: string[] = [];
+    let lastWord = '';
+    let repeatCount = 0;
+    
+    for (const word of words) {
+      if (word === lastWord) {
+        repeatCount++;
+        if (repeatCount < 2) {
+          filteredWords.push(word);
+        }
+      } else {
+        filteredWords.push(word);
+        lastWord = word;
+        repeatCount = 0;
+      }
+    }
+    
+    const cleanedSentence = filteredWords.join(' ');
+    
+    const normalizedSentence = cleanedSentence.replace(/\s+/g, '').toLowerCase();
+    if (normalizedSentence.length > 5 && !seenPhrases.has(normalizedSentence)) {
+      seenPhrases.add(normalizedSentence);
+      result.push(cleanedSentence);
+    } else if (normalizedSentence.length <= 5) {
+      result.push(cleanedSentence);
+    }
+  }
+  
+  return result.join('');
+}
+
 export const chatWithAI = async (
   messages: Message[],
   onChunk: (content: string) => void,
@@ -51,6 +95,7 @@ export const chatWithAI = async (
     }
 
     let buffer = '';
+    let accumulatedContent = '';
     
     while (true) {
       const { done, value } = await reader.read();
@@ -76,6 +121,8 @@ export const chatWithAI = async (
             const parsed = JSON.parse(data);
             const content = parsed.choices?.[0]?.delta?.content;
             if (content) {
+              accumulatedContent += content;
+              const filtered = filterRepeatedContent(accumulatedContent);
               onChunk(content);
             }
             

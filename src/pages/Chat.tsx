@@ -5,7 +5,69 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { chatWithAI } from '@/services/api';
+import MedicineDialog from '@/components/MedicineDialog';
 import type { Message } from '@/types/medicine';
+
+const medicineKeywords = [
+  '布洛芬', '阿莫西林', '头孢', '感冒药', '止咳糖浆', '退烧药', '消炎药',
+  '维生素', '板蓝根', '云南白药', '藿香正气', '双黄连', '连花清瘟',
+  '阿司匹林', '扑热息痛', '对乙酰氨基酚', '氨溴索', '止痛药', '降压药',
+  '降糖药', '胃药', '抗生素', '抗过敏药', '钙片', '鱼肝油'
+];
+
+function detectMedicineKeywords(text: string): string[] {
+  const detected: string[] = [];
+  for (const keyword of medicineKeywords) {
+    if (text.includes(keyword) && !detected.includes(keyword)) {
+      detected.push(keyword);
+    }
+  }
+  return detected;
+}
+
+function renderMessageWithLinks(
+  content: string,
+  onMedicineClick: (medicine: string) => void
+): React.ReactNode {
+  const keywords = detectMedicineKeywords(content);
+  if (keywords.length === 0) {
+    return content;
+  }
+
+  let result: React.ReactNode[] = [];
+  let lastIndex = 0;
+  const parts: Array<{ text: string; isMedicine: boolean; medicine?: string }> = [];
+
+  keywords.forEach((keyword) => {
+    const index = content.indexOf(keyword, lastIndex);
+    if (index !== -1) {
+      if (index > lastIndex) {
+        parts.push({ text: content.substring(lastIndex, index), isMedicine: false });
+      }
+      parts.push({ text: keyword, isMedicine: true, medicine: keyword });
+      lastIndex = index + keyword.length;
+    }
+  });
+
+  if (lastIndex < content.length) {
+    parts.push({ text: content.substring(lastIndex), isMedicine: false });
+  }
+
+  return parts.map((part, index) => {
+    if (part.isMedicine) {
+      return (
+        <button
+          key={index}
+          onClick={() => onMedicineClick(part.medicine!)}
+          className="text-health-green underline hover:text-health-green-dark font-medium cursor-pointer"
+        >
+          {part.text}
+        </button>
+      );
+    }
+    return <span key={index}>{part.text}</span>;
+  });
+}
 
 export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([
@@ -17,6 +79,8 @@ export default function Chat() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [selectedMedicine, setSelectedMedicine] = useState<string | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -26,6 +90,11 @@ export default function Chat() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  const handleMedicineClick = (medicine: string) => {
+    setSelectedMedicine(medicine);
+    setDialogOpen(true);
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -50,7 +119,7 @@ export default function Chat() {
       const conversationMessages: Message[] = [
         {
           role: 'system',
-          content: '你是一位专业的AI药师助手,负责为用户提供疾病科普、用药建议等健康咨询服务。请注意:1. 提供的建议仅供参考,不能替代专业医生诊断 2. 对于需要处方药的情况,提醒用户咨询医生 3. 回答要专业、准确、易懂 4. 关注用药安全',
+          content: '你是一位专业的AI药师助手,负责为用户提供疾病科普、用药建议等健康咨询服务。请注意:1. 提供的建议仅供参考,不能替代专业医生诊断 2. 对于需要处方药的情况,提醒用户咨询医生 3. 回答要专业、准确、易懂 4. 关注用药安全 5. 避免重复相同的词语和句子',
         },
         ...messages.filter((m) => m.role !== 'system'),
         userMessage,
@@ -98,58 +167,60 @@ export default function Chat() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl mb-4 shadow-lg">
-            <Bot className="w-8 h-8 text-white" />
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4">
+        <div className="mb-4 text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+            <Bot className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">AI智能问答</h1>
-          <p className="text-gray-600">专业的健康咨询,随时为您解答</p>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">AI智能问答</h1>
+          <p className="text-xs text-gray-600">专业健康咨询,随时为您解答</p>
         </div>
 
         {error && (
-          <Alert variant="destructive" className="mb-4">
+          <Alert variant="destructive" className="mb-3">
             <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
+            <AlertDescription className="text-sm">{error}</AlertDescription>
           </Alert>
         )}
 
-        <Card className="mb-4 border-none shadow-xl">
-          <CardContent className="p-6">
-            <div className="h-[500px] overflow-y-auto mb-4 space-y-4">
+        <Card className="mb-3 border-none shadow-lg">
+          <CardContent className="p-3">
+            <div className="h-[400px] overflow-y-auto mb-3 space-y-3">
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
-                    className={`flex items-start space-x-3 max-w-[80%] ${
+                    className={`flex items-start space-x-2 max-w-[85%] ${
                       message.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                     }`}
                   >
                     <div
-                      className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
+                      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                         message.role === 'user'
-                          ? 'bg-gradient-to-br from-green-500 to-emerald-500'
-                          : 'bg-gradient-to-br from-blue-500 to-purple-500'
+                          ? 'bg-gradient-to-br from-health-green to-health-green-light'
+                          : 'bg-gradient-to-br from-taobao-orange to-taobao-orange-light'
                       }`}
                     >
                       {message.role === 'user' ? (
-                        <User className="w-5 h-5 text-white" />
+                        <User className="w-4 h-4 text-white" />
                       ) : (
-                        <Bot className="w-5 h-5 text-white" />
+                        <Bot className="w-4 h-4 text-white" />
                       )}
                     </div>
                     <div
-                      className={`px-4 py-3 rounded-2xl ${
+                      className={`px-3 py-2 rounded-xl text-sm ${
                         message.role === 'user'
-                          ? 'bg-gradient-to-br from-green-500 to-emerald-500 text-white'
+                          ? 'bg-gradient-to-br from-health-green to-health-green-light text-white'
                           : 'bg-gray-100 text-gray-900'
                       }`}
                     >
                       <p className="whitespace-pre-wrap break-words leading-relaxed">
-                        {message.content}
+                        {message.role === 'assistant'
+                          ? renderMessageWithLinks(message.content, handleMedicineClick)
+                          : message.content}
                       </p>
                     </div>
                   </div>
@@ -157,12 +228,12 @@ export default function Chat() {
               ))}
               {isLoading && (
                 <div className="flex justify-start">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center">
-                      <Bot className="w-5 h-5 text-white" />
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-taobao-orange to-taobao-orange-light flex items-center justify-center">
+                      <Bot className="w-4 h-4 text-white" />
                     </div>
-                    <div className="px-4 py-3 rounded-2xl bg-gray-100">
-                      <Loader2 className="w-5 h-5 animate-spin text-gray-600" />
+                    <div className="px-3 py-2 rounded-xl bg-gray-100">
+                      <Loader2 className="w-4 h-4 animate-spin text-gray-600" />
                     </div>
                   </div>
                 </div>
@@ -171,16 +242,16 @@ export default function Chat() {
             </div>
 
             {messages.length === 1 && (
-              <div className="mb-4">
-                <p className="text-sm text-gray-600 mb-3">快速提问:</p>
-                <div className="flex flex-wrap gap-2">
+              <div className="mb-3">
+                <p className="text-xs text-gray-600 mb-2">快速提问:</p>
+                <div className="flex flex-wrap gap-1.5">
                   {quickQuestions.map((question, index) => (
                     <Button
                       key={index}
                       variant="outline"
                       size="sm"
                       onClick={() => handleQuickQuestion(question)}
-                      className="text-sm hover:bg-blue-50 hover:border-blue-300"
+                      className="text-xs hover:bg-orange-50 hover:border-taobao-orange h-7 px-2"
                     >
                       {question}
                     </Button>
@@ -195,18 +266,18 @@ export default function Chat() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="输入您的问题..."
-                className="min-h-[60px] max-h-[200px] resize-none rounded-xl border-2 focus:border-blue-500"
+                className="min-h-[50px] max-h-[120px] resize-none rounded-lg border-2 focus:border-taobao-orange text-sm"
                 disabled={isLoading}
               />
               <Button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 h-[60px] rounded-xl shadow-lg"
+                className="bg-taobao-orange hover:bg-taobao-orange-dark text-white px-4 h-[50px] rounded-lg shadow-md"
               >
                 {isLoading ? (
-                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
-                  <Send className="w-5 h-5" />
+                  <Send className="w-4 h-4" />
                 )}
               </Button>
             </div>
@@ -214,13 +285,19 @@ export default function Chat() {
         </Card>
 
         <Alert className="border-orange-200 bg-orange-50">
-          <AlertCircle className="h-4 w-4 text-orange-600" />
-          <AlertDescription className="text-orange-800">
+          <AlertCircle className="h-4 w-4 text-taobao-orange" />
+          <AlertDescription className="text-orange-800 text-xs">
             <strong>重要提示:</strong> AI助手提供的建议仅供参考,不能替代专业医生的诊断和治疗。
             如需处方药或病情严重,请及时就医。
           </AlertDescription>
         </Alert>
       </div>
+
+      <MedicineDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        medicineName={selectedMedicine || ''}
+      />
     </div>
   );
 }
