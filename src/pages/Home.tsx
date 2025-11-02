@@ -6,32 +6,32 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 export default function Home() {
   const features = [
     {
-      icon: <MessageCircle className="w-6 h-6 text-taobao-orange" />,
+      icon: <MessageCircle className="w-6 h-6 text-white" />,
       title: 'AI智能问答',
       description: '基于AI技术,理解症状并提供专业健康咨询',
       link: '/chat',
       color: 'from-taobao-orange to-taobao-orange-light',
     },
     {
-      icon: <Search className="w-6 h-6 text-health-green" />,
+      icon: <Search className="w-6 h-6 text-white" />,
       title: '药品检索',
       description: '快速搜索药品信息,了解功效和用法用量',
       link: '/search',
       color: 'from-health-green to-health-green-light',
     },
     {
-      icon: <BookOpen className="w-6 h-6 text-taobao-orange" />,
+      icon: <BookOpen className="w-6 h-6 text-white" />,
       title: '疾病科普',
       description: '常见疾病介绍、预防措施和治疗建议',
       link: '/diseases',
-      color: 'from-taobao-orange to-health-green',
+      color: 'from-taobao-orange to-taobao-orange-light',
     },
     {
-      icon: <Shield className="w-6 h-6 text-health-green" />,
+      icon: <Shield className="w-6 h-6 text-white" />,
       title: '用药指南',
       description: '安全用药知识,正确使用药物避免风险',
       link: '/guide',
-      color: 'from-health-green to-taobao-orange',
+      color: 'from-health-green to-health-green-light',
     },
   ];
 
@@ -39,7 +39,7 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4">
         <div className="text-center mb-4">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-taobao-orange to-health-green rounded-2xl mb-3 shadow-lg">
+          <div className="inline-flex items-center justify-center w-14 h-14 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-2xl mb-3 shadow-lg">
             <Pill className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
@@ -87,10 +87,10 @@ export default function Home() {
           ))}
         </div>
 
-        <Card className="border-none shadow-lg bg-gradient-to-r from-taobao-orange to-health-green text-white mb-4">
+        <Card className="border-none shadow-lg bg-gradient-to-r from-taobao-orange to-taobao-orange-light text-white mb-4">
           <CardContent className="py-4 px-4">
             <div className="text-center">
-              <Shield className="w-10 h-10 mx-auto mb-2" />
+              <Shield className="w-10 h-10 mx-auto mb-2 text-white" />
               <h2 className="text-lg font-bold mb-2">安全用药提醒</h2>
               <p className="text-xs mb-3 text-white/90">
                 本应用信息仅供参考,不能替代专业医生诊断。处方药需咨询医生并获得处方后购买。

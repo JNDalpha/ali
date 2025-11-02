@@ -14,7 +14,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between h-14">
           <div className="flex items-center">
             <Link to="/" className="flex-shrink-0 flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-taobao-orange to-taobao-orange-dark rounded-lg flex items-center justify-center shadow-md">
+              <div className="w-8 h-8 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-lg flex items-center justify-center shadow-md">
                 <Pill className="w-5 h-5 text-white" />
               </div>
               <span className="ml-2 text-base font-bold text-taobao-orange">

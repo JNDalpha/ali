@@ -11,79 +11,10 @@
       injectOnErrorPlugin
     } from "miaoda-sc-plugin";
 
-    const tailwindConfig = {
-      plugins: [
-        function ({ addUtilities }) {
-          addUtilities(
-            {
-              ".border-t-solid": { "border-top-style": "solid" },
-              ".border-r-solid": { "border-right-style": "solid" },
-              ".border-b-solid": { "border-bottom-style": "solid" },
-              ".border-l-solid": { "border-left-style": "solid" },
-              ".border-t-dashed": { "border-top-style": "dashed" },
-              ".border-r-dashed": { "border-right-style": "dashed" },
-              ".border-b-dashed": { "border-bottom-style": "dashed" },
-              ".border-l-dashed": { "border-left-style": "dashed" },
-              ".border-t-dotted": { "border-top-style": "dotted" },
-              ".border-r-dotted": { "border-right-style": "dotted" },
-              ".border-b-dotted": { "border-bottom-style": "dotted" },
-              ".border-l-dotted": { "border-left-style": "dotted" },
-            },
-            ["responsive"]
-          );
-        },
-      ],
-    };
-
-    export async function tryLoadConfigFromFile(
-      filePath: string,
-      env: ConfigEnv = { command: "serve", mode: "development" }
-    ): Promise<any | null> {
-      try {
-        const result = await loadConfigFromFile(env, filePath);
-        return result ? result.config : null;
-      } catch (error) {
-        console.warn(`加载配置文件失败: ${filePath}，尝试加载 cjs 版本`);
-        console.warn(error);
-
-        // 👇 创建 .cjs 临时文件重试
-        const tempFilePath =
-          filePath.replace(/\.(js|ts|mjs|mts)$/, "") + `.temp.cjs`;
-        try {
-          const originalContent = await fs.readFile(filePath, "utf-8");
-
-          // 补充逻辑：如果是 ESM 语法，无法直接 require，会失败
-          if (/^\s*import\s+/m.test(originalContent)) {
-            console.error(
-              `配置文件包含 import 语法，无法自动转为 CommonJS: ${filePath}`
-            );
-            return null;
-          }
-
-          await fs.writeFile(tempFilePath, originalContent, "utf-8");
-
-          const result = await loadConfigFromFile(env, tempFilePath);
-          return result ? result.config : null;
-        } catch (innerError) {
-          console.error(`重试加载临时 .cjs 文件失败: ${tempFilePath}`);
-          console.error(innerError);
-          return null;
-        } finally {
-          // 🧹 尝试删除临时文件
-          try {
-            await fs.unlink(tempFilePath);
-          } catch (_) {}
-        }
-      }
-    }
-
     const env: ConfigEnv = { command: "serve", mode: "development" };
     const configFile = path.resolve(__dirname, "vite.config.ts");
     const result = await loadConfigFromFile(env, configFile);
     const userConfig = result?.config;
-    const tailwindConfigFile = path.resolve(__dirname, "tailwind.config.js");
-    const tailwindResult = await tryLoadConfigFromFile(tailwindConfigFile, env);
-    const root = path.resolve(__dirname);
 
     export default defineConfig({
       ...userConfig,
@@ -181,17 +112,6 @@
   }
 },
 
-      ],
-      css: {
-        postcss: {
-          plugins: [
-            tailwindcss({
-              ...(tailwindResult as any),
-              content: [`${root}/index.html`, `${root}/src/**/*.{js,ts,jsx,tsx}`],
-            }),
-            autoprefixer(),
-          ],
-        },
-      }
+      ]
     });
     

@@ -6,34 +6,34 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 export default function Guide() {
   const safetyTips = [
     {
-      icon: <AlertTriangle className="w-5 h-5 text-taobao-orange" />,
+      icon: <AlertTriangle className="w-5 h-5 text-white" />,
       title: '遵医嘱用药',
       description: '严格按照医生处方或药品说明书使用药物,不可随意增减剂量或更改用药时间。',
       color: 'from-taobao-orange to-taobao-orange-light',
     },
     {
-      icon: <Clock className="w-5 h-5 text-health-green" />,
+      icon: <Clock className="w-5 h-5 text-white" />,
       title: '注意用药时间',
       description: '按时服药,饭前、饭后、睡前等时间要求要严格遵守,以确保药效。',
       color: 'from-health-green to-health-green-light',
     },
     {
-      icon: <Pill className="w-5 h-5 text-taobao-orange" />,
+      icon: <Pill className="w-5 h-5 text-white" />,
       title: '避免药物相互作用',
       description: '同时服用多种药物时,要注意药物之间的相互作用,必要时咨询医生或药师。',
-      color: 'from-taobao-orange to-health-green',
+      color: 'from-taobao-orange to-taobao-orange-light',
     },
     {
-      icon: <Heart className="w-5 h-5 text-health-green" />,
+      icon: <Heart className="w-5 h-5 text-white" />,
       title: '关注不良反应',
       description: '用药期间如出现不适,应及时停药并就医,不要忍耐或自行处理。',
-      color: 'from-health-green to-taobao-orange',
+      color: 'from-health-green to-health-green-light',
     },
   ];
 
   const specialGroups = [
     {
-      icon: <Baby className="w-6 h-6 text-taobao-orange" />,
+      icon: <Baby className="w-6 h-6 text-white" />,
       title: '儿童用药',
       tips: [
         '严格按照儿童剂量使用,不可用成人药物代替',
@@ -44,7 +44,7 @@ export default function Guide() {
       ],
     },
     {
-      icon: <Users className="w-6 h-6 text-health-green" />,
+      icon: <Users className="w-6 h-6 text-white" />,
       title: '孕妇用药',
       tips: [
         '孕期用药需特别谨慎,必须在医生指导下使用',
@@ -55,7 +55,7 @@ export default function Guide() {
       ],
     },
     {
-      icon: <Sun className="w-6 h-6 text-taobao-orange" />,
+      icon: <Sun className="w-6 h-6 text-white" />,
       title: '老年人用药',
       tips: [
         '从小剂量开始,逐渐调整到合适剂量',
@@ -113,7 +113,7 @@ export default function Guide() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4">
         <div className="mb-4 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-xl mb-2 shadow-md">
             <Shield className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-xl font-bold text-gray-900 mb-1">用药指南</h1>
@@ -164,7 +164,7 @@ export default function Guide() {
                 >
                   <div className="space-y-2">
                     <div className="flex items-center space-x-2 mb-2">
-                      <div className="w-10 h-10 bg-gradient-to-br from-taobao-orange to-health-green rounded-lg flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-lg flex items-center justify-center">
                         {group.icon}
                       </div>
                       <h3 className="text-sm font-semibold text-gray-900">{group.title}</h3>

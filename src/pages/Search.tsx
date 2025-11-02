@@ -73,7 +73,7 @@ export default function SearchPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-6xl mx-auto px-3 sm:px-4 py-4">
         <div className="mb-4 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-health-green to-health-green-light rounded-xl mb-2 shadow-md">
             <SearchIcon className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-xl font-bold text-gray-900 mb-1">药品检索</h1>
@@ -150,7 +150,7 @@ export default function SearchPage() {
           <Card className="mb-3 border-none shadow-lg">
             <CardHeader className="p-3">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-taobao-orange to-health-green rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-lg flex items-center justify-center">
                   <Sparkles className="w-4 h-4 text-white" />
                 </div>
                 <CardTitle className="text-sm">AI智能总结</CardTitle>

@@ -25,7 +25,7 @@ export default function Diseases() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4">
         <div className="mb-4 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-health-green to-health-green-light rounded-xl mb-2 shadow-md">
             <BookOpen className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-xl font-bold text-gray-900 mb-1">疾病科普</h1>
@@ -81,12 +81,12 @@ export default function Diseases() {
                   <div>
                     <CardTitle className="text-lg mb-1">{selectedDiseaseData.name}</CardTitle>
                     <CardDescription className="text-xs">
-                      <span className="inline-flex items-center px-2 py-0.5 bg-orange-100 text-taobao-orange rounded-full text-xs font-medium">
+                      <span className="inline-flex items-center px-2 py-0.5 bg-green-100 text-health-green rounded-full text-xs font-medium">
                         {selectedDiseaseData.category}
                       </span>
                     </CardDescription>
                   </div>
-                  <Activity className="w-8 h-8 text-taobao-orange" />
+                  <Activity className="w-8 h-8 text-health-green" />
                 </div>
               </CardHeader>
               <CardContent className="p-3 pt-0">
@@ -102,7 +102,7 @@ export default function Diseases() {
                     <div className="space-y-3">
                       <div>
                         <h3 className="text-sm font-semibold text-gray-900 mb-1.5 flex items-center">
-                          <BookOpen className="w-4 h-4 mr-1.5 text-taobao-orange" />
+                          <BookOpen className="w-4 h-4 mr-1.5 text-health-green" />
                           疾病简介
                         </h3>
                         <p className="text-xs text-gray-700 leading-relaxed">
@@ -178,11 +178,11 @@ export default function Diseases() {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <CardTitle className="text-sm mb-1">{disease.name}</CardTitle>
-                      <span className="inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-taobao-orange to-health-green text-white rounded-full text-xs font-medium">
+                      <span className="inline-flex items-center px-2 py-0.5 bg-gradient-to-r from-health-green to-health-green-light text-white rounded-full text-xs font-medium">
                         {disease.category}
                       </span>
                     </div>
-                    <Activity className="w-6 h-6 text-taobao-orange flex-shrink-0 ml-2" />
+                    <Activity className="w-6 h-6 text-health-green flex-shrink-0 ml-2" />
                   </div>
                 </CardHeader>
                 <CardContent className="p-3 pt-0">

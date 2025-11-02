@@ -170,7 +170,7 @@ export default function Chat() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-5xl mx-auto px-3 sm:px-4 py-4">
         <div className="mb-4 text-center">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-health-green rounded-xl mb-2 shadow-md">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-xl mb-2 shadow-md">
             <Bot className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-xl font-bold text-gray-900 mb-1">AI智能问答</h1>
