@@ -1,37 +1,50 @@
 import { Link } from 'react-router-dom';
-import { MessageCircle, Search, BookOpen, Shield, Pill } from 'lucide-react';
+import { MessageCircle, Search, Dumbbell, Sparkles, BookOpen, Shield, Pill } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default function Home() {
-  const features = [
+  const mainFeatures = [
     {
       icon: <MessageCircle className="w-6 h-6 text-white" />,
-      title: 'AI智能问答',
-      description: '基于AI技术,理解症状并提供专业健康咨询',
+      title: 'AI智能问诊',
+      description: '基于症状分析疾病,提供专业诊疗建议',
       link: '/chat',
       color: 'from-taobao-orange to-taobao-orange-light',
     },
     {
       icon: <Search className="w-6 h-6 text-white" />,
       title: '药品检索',
-      description: '快速搜索药品信息,了解功效和用法用量',
+      description: '药品功效查询、比价与在线购药',
       link: '/search',
       color: 'from-health-green to-health-green-light',
     },
     {
-      icon: <BookOpen className="w-6 h-6 text-white" />,
-      title: '疾病科普',
-      description: '常见疾病介绍、预防措施和治疗建议',
-      link: '/diseases',
+      icon: <Dumbbell className="w-6 h-6 text-white" />,
+      title: '运动健康',
+      description: '个性化运动方案与损伤康复指导',
+      link: '/sports',
       color: 'from-taobao-orange to-taobao-orange-light',
     },
     {
-      icon: <Shield className="w-6 h-6 text-white" />,
-      title: '用药指南',
-      description: '安全用药知识,正确使用药物避免风险',
-      link: '/guide',
+      icon: <Sparkles className="w-6 h-6 text-white" />,
+      title: '医美咨询',
+      description: '医美项目评估与产品推荐',
+      link: '/beauty',
       color: 'from-health-green to-health-green-light',
+    },
+  ];
+
+  const moreFeatures = [
+    {
+      icon: <BookOpen className="w-5 h-5 text-health-green" />,
+      title: '疾病科普',
+      link: '/diseases',
+    },
+    {
+      icon: <Shield className="w-5 h-5 text-taobao-orange" />,
+      title: '用药指南',
+      link: '/guide',
     },
   ];
 
@@ -43,16 +56,16 @@ export default function Home() {
             <Pill className="w-7 h-7 text-white" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-            AI药师助手
+            AI健康管家
           </h1>
           <p className="text-sm text-gray-600 max-w-2xl mx-auto">
-            智能健康顾问,提供专业用药指导和健康咨询
+            智能健康顾问,提供问诊、用药、运动、医美等全方位健康服务
           </p>
           <div className="mt-4 flex justify-center gap-2">
             <Link to="/chat">
               <Button size="sm" className="bg-taobao-orange hover:bg-taobao-orange-dark text-white px-4 py-2 text-sm rounded-lg shadow-md">
                 <MessageCircle className="w-4 h-4 mr-1.5" />
-                开始咨询
+                开始问诊
               </Button>
             </Link>
             <Link to="/search">
@@ -65,7 +78,7 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-4">
-          {features.map((feature, index) => (
+          {mainFeatures.map((feature, index) => (
             <Link key={index} to={feature.link}>
               <Card className="h-full border-none shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 cursor-pointer overflow-hidden">
                 <div className={`h-1 bg-gradient-to-r ${feature.color}`} />
@@ -86,6 +99,24 @@ export default function Home() {
             </Link>
           ))}
         </div>
+
+        <Card className="border-none shadow-md mb-4">
+          <CardHeader className="p-3">
+            <CardTitle className="text-sm">更多服务</CardTitle>
+          </CardHeader>
+          <CardContent className="p-3 pt-0">
+            <div className="grid grid-cols-2 gap-2">
+              {moreFeatures.map((feature, index) => (
+                <Link key={index} to={feature.link}>
+                  <div className="flex items-center space-x-2 p-2 rounded-lg border hover:border-taobao-orange hover:bg-orange-50 transition-all cursor-pointer">
+                    {feature.icon}
+                    <span className="text-sm font-medium text-gray-700">{feature.title}</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
 
         <Card className="border-none shadow-lg bg-gradient-to-r from-taobao-orange to-taobao-orange-light text-white mb-4">
           <CardContent className="py-4 px-4">

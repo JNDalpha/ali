@@ -173,8 +173,8 @@ export default function Chat() {
           <div className="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-br from-taobao-orange to-taobao-orange-light rounded-xl mb-2 shadow-md">
             <Bot className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-xl font-bold text-gray-900 mb-1">AI智能问答</h1>
-          <p className="text-xs text-gray-600">专业健康咨询,随时为您解答</p>
+          <h1 className="text-xl font-bold text-gray-900 mb-1">AI智能问诊</h1>
+          <p className="text-xs text-gray-600">基于症状分析疾病,提供专业诊疗建议</p>
         </div>
 
         {error && (
