@@ -28,7 +28,7 @@ export default function Home() {
     },
     {
       icon: <Sparkles className="w-6 h-6 text-white" />,
-      title: '医美咨询',
+      title: '医疗美容',
       description: '医美项目评估与产品推荐',
       link: '/beauty',
       color: 'from-health-green to-health-green-light',

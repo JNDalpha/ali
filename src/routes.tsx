@@ -40,7 +40,7 @@ const routes: RouteConfig[] = [
     visible: true,
   },
   {
-    name: '医美咨询',
+    name: '医疗美容',
     path: '/beauty',
     element: <Beauty />,
     visible: true,
