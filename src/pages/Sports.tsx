@@ -130,109 +130,10 @@ export default function Sports() {
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-3">
-          <TabsList className="grid w-full grid-cols-2 h-10">
-            <TabsTrigger value="plan" className="text-sm">运动方案</TabsTrigger>
-            <TabsTrigger value="injury" className="text-sm">损伤咨询</TabsTrigger>
-          </TabsList>
 
           <TabsContent value="plan" className="mt-3">
-            <Card className="border-none shadow-lg mb-3">
-              <CardContent className="p-3">
-                <div className="h-[350px] overflow-y-auto mb-3 space-y-3">
-                  {messages.map((message, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                    >
-                      <div
-                        className={`flex items-start space-x-2 max-w-[85%] ${
-                          message.role === 'user' ? 'flex-row-reverse space-x-reverse' : ''
-                        }`}
-                      >
-                        <div
-                          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                            message.role === 'user'
-                              ? 'bg-gradient-to-br from-health-green to-health-green-light'
-                              : 'bg-gradient-to-br from-taobao-orange to-taobao-orange-light'
-                          }`}
-                        >
-                          {message.role === 'user' ? (
-                            <User className="w-4 h-4 text-white" />
-                          ) : (
-                            <Bot className="w-4 h-4 text-white" />
-                          )}
-                        </div>
-                        <div
-                          className={`px-3 py-2 rounded-xl text-sm ${
-                            message.role === 'user'
-                              ? 'bg-gradient-to-br from-health-green to-health-green-light text-white'
-                              : 'bg-gray-100 text-gray-900'
-                          }`}
-                        >
-                          <p className="whitespace-pre-wrap break-words leading-relaxed">
-                            {message.content}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-taobao-orange to-taobao-orange-light flex items-center justify-center">
-                          <Bot className="w-4 h-4 text-white" />
-                        </div>
-                        <div className="px-3 py-2 rounded-xl bg-gray-100">
-                          <Loader2 className="w-4 h-4 animate-spin text-gray-600" />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
 
-                {messages.length === 1 && (
-                  <div className="mb-3">
-                    <p className="text-xs text-gray-600 mb-2">快速提问:</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {quickQuestions.plan.map((question, index) => (
-                        <Button
-                          key={index}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setInput(question)}
-                          className="text-xs hover:bg-orange-50 hover:border-taobao-orange h-7 px-2"
-                        >
-                          {question}
-                        </Button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <div className="flex items-end space-x-2">
-                  <Textarea
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    placeholder="描述您的运动目标或身体状况..."
-                    className="min-h-[50px] max-h-[120px] resize-none rounded-lg border-2 focus:border-taobao-orange text-sm"
-                    disabled={isLoading}
-                  />
-                  <Button
-                    onClick={handleSend}
-                    disabled={!input.trim() || isLoading}
-                    className="bg-taobao-orange hover:bg-taobao-orange-dark text-white px-4 h-[50px] rounded-lg shadow-md"
-                  >
-                    {isLoading ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : (
-                      <Send className="w-4 h-4" />
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
           </TabsContent>
-
           <TabsContent value="injury" className="mt-3">
             <Card className="border-none shadow-lg mb-3">
               <CardContent className="p-3">
