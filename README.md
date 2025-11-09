@@ -1,3 +1,7 @@
+# Welcome to Your Miaoda Project
+Miaoda Application Link URL
+    URL:https://www.miaoda.cn/projects/app-722l13udx8u9
+
 ## 介绍
 
 项目介绍
@@ -93,6 +97,73 @@ Vite、TypeScript、React、Supabase
 ### 如何配置应用中的三方 API？
 
 具体三方 API 调用方法，请参考帮助文档：[源码导出](https://cloud.baidu.com/doc/MIAODA/s/Xmewgmsq7)，了解更多详细内容。
+
+## 部署到 GitHub Pages
+
+### 方法一：使用 GitHub Actions 自动部署（推荐）
+
+1. **准备 GitHub 仓库**
+   - 在 GitHub 上创建一个新的仓库
+   - 将代码推送到仓库
+
+2. **启用 GitHub Pages**
+   - 进入仓库的 `Settings` -> `Pages`
+   - 在 `Source` 中选择 `GitHub Actions`
+   - 保存设置
+
+3. **配置环境变量（如果需要）**
+   - 进入仓库的 `Settings` -> `Secrets and variables` -> `Actions`
+   - 如果需要 `VITE_APP_ID` 等环境变量，添加对应的 Secrets
+   - 在 `.github/workflows/deploy.yml` 中取消注释并配置
+
+4. **触发部署**
+   - 推送代码到 `main` 或 `master` 分支
+   - GitHub Actions 会自动构建并部署
+   - 部署完成后，访问：`https://<你的用户名>.github.io/<仓库名>/`
+
+### 方法二：手动部署
+
+1. **构建项目**
+   ```bash
+   npm run build:prod
+   ```
+
+2. **部署到 GitHub Pages**
+   - 如果部署到子路径（`username.github.io/repository-name`）：
+     ```bash
+     VITE_BASE_PATH=/repository-name/ npm run build:prod
+     ```
+   - 如果部署到根路径（`username.github.io`）：
+     ```bash
+     npm run build:prod
+     ```
+
+3. **上传 dist 目录**
+   - 将 `dist` 目录的内容推送到 `gh-pages` 分支
+   - 或在 GitHub 仓库设置中配置 Pages 源
+
+### 其他部署平台
+
+#### Vercel
+1. 访问 [Vercel](https://vercel.com)
+2. 导入 GitHub 仓库
+3. 构建命令：`npm run build:prod`
+4. 输出目录：`dist`
+5. 自动部署完成
+
+#### Netlify
+1. 访问 [Netlify](https://netlify.com)
+2. 导入 GitHub 仓库
+3. 构建命令：`npm run build:prod`
+4. 发布目录：`dist`
+5. 自动部署完成
+
+### 注意事项
+
+- 如果项目需要环境变量（如 `VITE_APP_ID`），需要在部署平台的设置中配置
+- GitHub Pages 部署到子路径时，会自动设置正确的 base path
+- 路由使用 BrowserRouter，部署后刷新页面可能会 404，需要配置服务器重定向规则
+- GitHub Pages 会自动处理 SPA 路由，无需额外配置
 
 ## 了解更多
 
