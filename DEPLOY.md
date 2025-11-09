@@ -8,12 +8,48 @@
 
 #### 使用 GitHub Actions 自动部署
 
-1. **创建 GitHub 仓库**
+1. **准备 GitHub 仓库**
+   
+   检查是否已有 remote：
+   ```bash
+   git remote -v
+   ```
+   
+   **情况 A：如果已有 remote，想使用现有仓库**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main
+   # 或者如果分支是 master
+   git push -u origin master
+   ```
+   
+   **情况 B：如果已有 remote，想更换为新仓库**
+   ```bash
+   # 更新 remote URL
+   git remote set-url origin https://github.com/你的用户名/你的仓库名.git
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main
+   ```
+   
+   **情况 C：如果没有 remote，创建新的**
    ```bash
    git init
    git add .
    git commit -m "Initial commit"
    git remote add origin https://github.com/你的用户名/你的仓库名.git
+   git push -u origin main
+   ```
+   
+   **情况 D：如果 remote 已存在但想重新添加**
+   ```bash
+   # 删除现有 remote
+   git remote remove origin
+   # 添加新的 remote
+   git remote add origin https://github.com/你的用户名/你的仓库名.git
+   git add .
+   git commit -m "Initial commit"
    git push -u origin main
    ```
 

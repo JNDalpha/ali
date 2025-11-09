@@ -103,8 +103,34 @@ Vite、TypeScript、React、Supabase
 ### 方法一：使用 GitHub Actions 自动部署（推荐）
 
 1. **准备 GitHub 仓库**
-   - 在 GitHub 上创建一个新的仓库
-   - 将代码推送到仓库
+   
+   检查是否已有 remote：
+   ```bash
+   git remote -v
+   ```
+   
+   **如果已有 remote，想使用现有仓库：**
+   ```bash
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main  # 或 master
+   ```
+   
+   **如果已有 remote，想更换为新仓库：**
+   ```bash
+   git remote set-url origin https://github.com/你的用户名/你的仓库名.git
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main
+   ```
+   
+   **如果没有 remote：**
+   ```bash
+   git remote add origin https://github.com/你的用户名/你的仓库名.git
+   git add .
+   git commit -m "Initial commit"
+   git push -u origin main
+   ```
 
 2. **启用 GitHub Pages**
    - 进入仓库的 `Settings` -> `Pages`
