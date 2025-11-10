@@ -35,7 +35,7 @@ jobs:
       - name: Build
         env:
           # 如果项目需要环境变量，在这里设置
-          # VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
+          VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
           # 设置 base path 为仓库名（GitHub Pages 子路径部署）
           # 格式：/repository-name/
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
