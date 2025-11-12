@@ -1,7 +1,7 @@
 ## To JUMPSTARTER ZPIRE Team
 Dear JUMPSTARTER ZPIRE Team:  
-The chat.md file is in the code page of this repository, and the front-end landing page can be visit here: https://jndalpha.github.io/ali/
-The our landing page is mobile-friendly too, you can visit it by mobile phone.
+The chat.md file is in the code page of this repository, and the front-end landing page can be visit here: https://jndalpha.github.io/ali/  
+Our landing page is mobile-friendly too, you can visit it by mobile phone.
 We are looking forward to your comments!  
 Your Sincerely,  
 Group SyncU.  
