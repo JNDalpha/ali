@@ -65,13 +65,13 @@ AImessage: Excellent! Connecting a front-end to a LangChain/LangGraph back-end r
 Architecture Overview
 Front-End (UI) → API Gateway → WebSocket/HTTP Server → LangGraph Agent Back-End
 1. Back-End Setup with FastAPI/WebSockets
-<code>
+code  
 2. Enhanced LangGraph Agent Back-End
-<code>
+code  
 3. Front-End Integration
-<code>
+code  
 Component Usage:
-<code>
+code  
 4. Key Considerations
 Real-time vs HTTP:
 WebSockets: Best for chat interfaces, real-time updates
@@ -95,25 +95,25 @@ xcellent! Since you have both components built, here's a comprehensive testing s
 
 1. Back-End Agent Testing
 Unit Testing for LangGraph Components  
-<code>  
+code  
 Load Testing for Agent Back-End  
-<code>  
+code  
 2. Integration Testing
 API Integration Tests  
-<code>  
+code  
 3. End-to-End Testing
 Playwright/Selenium E2E Tests  
-<code>  
+code  
 E2E Test with Real Back-End  
 4. Stability & Chaos Testing
 Resilience Testing  
-<code>  
+code  
 5. Performance Monitoring & Alerting
 Continuous Monitoring Setup  
-<code>
+code
 6. Test Automation Pipeline
 GitHub Actions Example  
-<code>  
+code  
 Key Stability Metrics to Monitor:
 Response Time: P95 under 2 seconds
 
